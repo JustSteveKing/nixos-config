@@ -5,6 +5,7 @@
     ./programs/agents.nix
     ./programs/aliases.nix
     ./programs/browsers.nix
+    ./programs/editors.nix
     ./programs/launcher.nix
     ./programs/common.nix
     ./programs/obs.nix
