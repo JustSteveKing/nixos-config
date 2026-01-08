@@ -9,6 +9,7 @@
     ./programs/containers.nix
     ./programs/launcher.nix
     ./programs/common.nix
+    ./programs/languages.nix
     ./programs/obs.nix
     ./programs/git.nix
     ./programs/ghostty.nix
