@@ -84,8 +84,8 @@
     enable = true;
     settings = {
       ipc = "on";
-      preload = [ "/home/steve/wallpapers/bg-png" ];
-      wallpaper = [ "HDMI-A-1,/home/steve/wallpapers/bg-png" ];
+      preload = [ "/home/steve/wallpapers/bg.png" ];
+      wallpaper = [ "HDMI-A-1,/home/steve/wallpapers/bg.png" ];
     };
   };
 }
