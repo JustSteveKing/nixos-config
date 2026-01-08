@@ -34,6 +34,7 @@
         "$mod, Space, exec, $menu"
         "$mod, F, exec, firefox"
         "$mod, E, exec, $fileManager"
+        "$mod, C, exec, code"
         "$mod, V, togglefloating,"
         "$mod, O, exec, obs"
         "$mod, M, exit,"                # Logout of Hyprland
