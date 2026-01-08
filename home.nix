@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./programs/agents.nix
     ./programs/aliases.nix
     ./programs/browsers.nix
     ./programs/launcher.nix

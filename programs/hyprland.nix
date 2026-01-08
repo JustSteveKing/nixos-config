@@ -4,7 +4,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = "HDMI-A-1, 2256x1504, 0x0, 1.25";
+      monitor = "HDMI-A-1, 2256x1504, 0x0, 1.60";
 
       input = {
         kb_layout = "gb"; # Matches your console setting [cite: 33]
