@@ -2,7 +2,6 @@
 
 {
   imports = [
-    inputs.zen-browser.homeModules.default
     ./programs/agents.nix
     ./programs/aliases.nix
     ./programs/browsers.nix
