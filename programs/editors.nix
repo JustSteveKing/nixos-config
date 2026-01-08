@@ -6,18 +6,22 @@
 
     package = pkgs.vscode;
 
-    extensions = with pkgs.vscode-extensions; [
-      catppuccin.catppuccin-vsc
-      github.copilot
-      anthropic.claude-dev
-    ];
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        catppuccin.catppuccin-vsc
+	github.copilot
+      ];
 
-    userSettings = {
-      "workbench.colorTheme" = "Catppuccin Mocha";
-      "editor.fontFamily" = "'JetBrains Mono', 'monospace'";
-      "editor.fontSize" = 12;
-      "window.menuBarVisibility" = "toggle";
-      "terminal.integrated.defaultProfile.linux" = "bash";
+      userSettings = {
+        "workbench.colorTheme" = "Catppuccin Mocha";
+        "editor.fontFamily" = "'JetBrains Mono', 'monospace'";
+        "editor.fontSize" = 12;
+        "window.menuBarVisibility" = "toggle";
+        "terminal.integrated.defaultProfile.linux" = "bash";
+        # Tip: Add this to hide the "Profiles" badge if you only use one
+        "workbench.settings.editor" = "json";
+      };
     };
+
   };
 }

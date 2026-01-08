@@ -19,6 +19,16 @@
     "pcie_aspm=off"
   ];
 
+  virtualisation.containers.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      dockerCompat = true;
+
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   networking.hostName = "framework";
   networking.networkmanager.enable = true;
