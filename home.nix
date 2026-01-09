@@ -2,27 +2,20 @@
 
 {
   imports = [
-    ./programs/agents.nix
-    ./programs/aliases.nix
-    ./programs/browsers.nix
-    ./programs/editors.nix
-    ./programs/containers.nix
-    ./programs/launcher.nix
-    ./programs/common.nix
-    ./programs/languages.nix
-    ./programs/obs.nix
-    ./programs/git.nix
-    ./programs/ghostty.nix
-    ./programs/hyprland.nix
-    ./programs/waybar.nix
-    ./programs/zellij.nix
-    ./programs/taskwarrior.nix
-    ./programs/scripts.nix
-    ./programs/theme.nix
-    ./programs/mako.nix
-    ./programs/hyprlock.nix
-    ./programs/studio-mode.nix
+    # Categories
+    ./programs/desktop/default.nix
+    ./programs/shell/default.nix
+    ./programs/editors/default.nix
+    ./programs/dev/default.nix
 
+    # Standalone
+    ./programs/agents.nix
+    ./programs/browsers.nix
+    ./programs/common.nix
+    ./programs/obs.nix
+    ./programs/scripts.nix
+    ./programs/studio-mode.nix
+    ./programs/taskwarrior.nix
   ];
 
   home.sessionVariables = {
