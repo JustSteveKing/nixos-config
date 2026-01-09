@@ -28,24 +28,6 @@
 	nixos-hardware.nixosModules.common-pc-ssd
 
 	home-manager.nixosModules.home-manager
-	{
-
-          home-manager = {
-	    backupFileExtension = "bak";
-
-	    extraSpecialArgs = { inherit inputs; };
-
-            useGlobalPkgs = false;
-	    useUserPackages = true;
-
-            users.steve = {
-	      nixpkgs.config.allowUnfree = true;
-	      imports = [ ./home.nix ];
-
-	    };
-	  };
-
-	}
       ];
     };
   };
