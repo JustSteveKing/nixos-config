@@ -22,5 +22,7 @@
 
     # Generic file manager (Nautilus works fine even without GNOME)
     nautilus
+
+    kdePackages.kdenlive
   ];
 }

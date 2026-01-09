@@ -1,133 +1,72 @@
-# CLAUDE.md
+# CLAUDE.md: Project Overview
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides a comprehensive overview of this NixOS configuration repository to be used as instructional context for an AI assistant.
 
-## Repository Overview
+## Project Overview
 
-This is a personal NixOS configuration for a Framework 13 laptop running Hyprland (Wayland compositor). The configuration uses flakes and home-manager for declarative system and user environment management.
+This is a complete NixOS configuration managed using [Nix Flakes](https://nixos.wiki/wiki/Flakes). It sets up a personalized desktop environment for a machine named "framework". The configuration is modular, separating system-level settings from user-specific dotfiles, which are managed by [home-manager](https://github.com/nix-community/home-manager).
 
-## Architecture
+The primary goal is to create a declarative, reproducible, and version-controlled system environment.
 
-### Configuration Structure
+### Key Technologies & Features
 
-The repository follows a modular structure with three primary entry points:
+*   **Operating System:** NixOS Unstable
+*   **Configuration Management:** Nix Flakes
+*   **User Environment:** Home Manager
+*   **Window Manager:** Hyprland (Wayland compositor)
+*   **System Services:**
+    *   `pipewire` for audio.
+    *   `podman` for OCI containers.
+    *   `ollama` for running local large language models.
+    *   `greetd` with `tuigreet` for a TTY-based login manager.
+*   **Creative Tools:**
+    *   `kdenlive` for video editing.
+*   **Structure:**
+    *   System configuration is defined in `configuration.nix`.
+    *   User-specific setup is in `home.nix`.
+    *   Application configurations are modularized and imported from the `programs/` directory.
 
-1. **flake.nix** - Defines the system configuration named "framework" with:
-   - nixpkgs (unstable channel)
-   - nixos-hardware modules for AMD CPU and SSD optimizations
-   - home-manager for user-level configuration
+## Building and Running the System
 
-2. **configuration.nix** - System-level NixOS configuration including:
-   - Bootloader (systemd-boot)
-   - Hardware (AMD GPU, v4l2loopback for OBS virtual camera)
-   - Hyprland window manager
-   - greetd/tuigreet for login
-   - PipeWire for audio
-   - Ollama service with deepseek-r1:1.5b and llama3.2 models
-   - System packages
+The `Makefile` provides a set of convenient commands for managing the NixOS system.
 
-3. **home.nix** - User-level home-manager configuration that imports modular program configurations from `programs/`
+*   **Apply the configuration:**
+    ```bash
+    make switch
+    ```
+    This command runs `sudo nixos-rebuild switch --flake .#$(hostname)` to build and activate the new configuration immediately.
 
-### Program Modules
+*   **Test the configuration:**
+    ```bash
+    make test
+    ```
+    This builds the configuration and creates a temporary GRUB entry to test it without making it the default.
 
-All user-level program configurations live in `programs/` directory as separate `.nix` files:
+*   **Update flake inputs:**
+    ```bash
+    make update
+    ```
+    This command updates all the dependencies (Nixpkgs, home-manager, etc.) in the `flake.lock` file.
 
-- **agents.nix** - AI coding tools (Claude Code via npx, aider-chat, gh-dash)
-- **aliases.nix** - Shell aliases
-- **browsers.nix** - Web browsers
-- **common.nix** - Common CLI tools and utilities (ripgrep, jq, htop, fonts)
-- **ghostty.nix** - Terminal emulator with Catppuccin Mocha theme, auto-launches Zellij
-- **git.nix** - Git configuration with user details
-- **hyprland.nix** - Hyprland window manager configuration with keybindings, waybar, hyprpaper
-- **launcher.nix** - Application launcher
-- **obs.nix** - OBS Studio configuration
-- **taskwarrior.nix** - Task management
-- **waybar.nix** - Status bar configuration for Hyprland
-- **zellij.nix** - Terminal multiplexer
+*   **Clean up old generations:**
+    ```bash
+    make gc
+    ```
+    This removes old, unused Nix store paths to free up disk space.
 
-### Key Design Patterns
+*   **Check the configuration:**
+    ```bash
+    make check
+    ```
+    This runs `nix flake check` to ensure the flake is syntactically correct and can be evaluated.
 
-- **Modular approach**: Each program gets its own `.nix` file imported by home.nix
-- **Home-manager integration**: User configuration is separate from system configuration
-- **Declarative packages**: Each module declares its required packages inline using `home.packages` or `programs.<name>.enable`
-- **Session variables**: Wayland/Hyprland environment variables set in home.nix
+## Development Conventions
 
-## Common Commands
+This repository follows a clear, modular structure to manage complexity.
 
-### Building and Applying Configuration
-
-```bash
-# Rebuild and switch to new system configuration
-sudo nixos-rebuild switch --flake .#framework
-
-# Test new configuration without switching boot default
-sudo nixos-rebuild test --flake .#framework
-
-# Build configuration without activating
-sudo nixos-rebuild build --flake .#framework
-
-# Update flake inputs (nixpkgs, home-manager, etc.)
-nix flake update
-```
-
-### Flake Operations
-
-```bash
-# Show flake metadata and outputs
-nix flake show
-
-# Check flake for errors
-nix flake check
-
-# Update specific input
-nix flake lock --update-input nixpkgs
-```
-
-### Development Workflow
-
-When adding new programs:
-
-1. Create a new `.nix` file in `programs/` directory
-2. Add the import to `home.nix` imports list
-3. Rebuild with `sudo nixos-rebuild switch --flake .#framework`
-
-### System Information
-
-```bash
-# View current system generation
-sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
-
-# Garbage collect old generations
-sudo nix-collect-garbage --delete-older-than 7d
-
-# Optimize nix store
-nix-store --optimize
-```
-
-## Hardware-Specific Notes
-
-- **Monitor**: HDMI-A-1 configured at 2256x1504 with 1.60 scaling (see programs/hyprland.nix:7)
-- **Keyboard layout**: GB (British)
-- **Special hardware**: ZSA Moonlander keyboard (keymapp configured)
-- **Bluetooth**: Enabled with experimental features and FastConnectable
-- **GPU**: AMD with amdgpu driver
-- **Kernel**: Latest kernel with specific parameters for Bluetooth autosuspend and PCIe ASPM
-
-## Hyprland Configuration
-
-- **Mod key**: SUPER (Windows key)
-- **Terminal**: Ghostty (SUPER+Return)
-- **Launcher**: hyprlauncher (SUPER+Space)
-- **Navigation**: Vim-style (hjkl) for window focus
-- **Workspaces**: 4 workspaces configured (SUPER+1-4)
-- **Auto-start**: waybar, blueman-applet, polkit-gnome-authentication-agent
-
-## AI Development Tools
-
-This configuration includes several AI coding assistants:
-
-- **Claude Code**: Available as `claude` command (or `cc` alias), uses npx to run latest version
-- **Aider**: Available as `aider-chat` for AI pair programming
-- **Quick query**: Use `ask` alias for one-off Claude queries
-
-The CLAUDE_EDITOR environment variable is set to "nvim".
+*   **Central Flake:** `flake.nix` is the entry point. It defines all inputs and orchestrates the assembly of the final NixOS and home-manager configurations.
+*   **System vs. User:**
+    *   `configuration.nix`: Contains system-wide settings, hardware configuration, and services that run for the entire machine.
+    *   `home.nix`: Is the main file for the `home-manager` configuration. It primarily acts as a manifest, importing all the modular program configurations.
+*   **Modular Programs:** The `programs/` directory contains individual `.nix` files for configuring specific applications (e.g., `git.nix`, `hyprland.nix`, `zellij.nix`). This makes it easy to manage, add, or remove applications.
+*   **Adding New Programs:** To add a new program, create a `.nix` file in the `programs/` directory defining its configuration and then import it into `home.nix`.

@@ -8,6 +8,7 @@ This repository contains the complete NixOS configuration for my Framework Deskt
 - **Window Manager**: Hyprland (Wayland compositor) with vim-style navigation.
 - **Terminal**: Ghostty with the Catppuccin Mocha theme and Zellij for terminal multiplexing.
 - **Login Manager**: `greetd` with `tuigreet` for a clean, TTY-based login experience.
+- **Creative Tools**: Kdenlive for video editing.
 - **Modular Structure**: System and home configurations are cleanly separated and broken down into logical, easy-to-manage modules.
 
 ---

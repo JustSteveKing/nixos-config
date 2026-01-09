@@ -19,6 +19,8 @@ The primary goal is to create a declarative, reproducible, and version-controlle
     *   `podman` for OCI containers.
     *   `ollama` for running local large language models.
     *   `greetd` with `tuigreet` for a TTY-based login manager.
+*   **Creative Tools:**
+    *   `kdenlive` for video editing.
 *   **Structure:**
     *   System configuration is defined in `configuration.nix`.
     *   User-specific setup is in `home.nix`.
