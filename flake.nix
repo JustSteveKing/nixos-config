@@ -25,9 +25,9 @@
         ./configuration.nix
 
         nixos-hardware.nixosModules.common-cpu-amd
-	nixos-hardware.nixosModules.common-pc-ssd
+        nixos-hardware.nixosModules.common-pc-ssd
 
-	home-manager.nixosModules.home-manager
+        home-manager.nixosModules.home-manager
       ];
     };
   };

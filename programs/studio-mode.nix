@@ -17,6 +17,7 @@ let
         notify-send "Studio Mode" "Back to standard mode."
     fi
   '';
-in {
+in
+{
   home.packages = [ studio-toggle ];
 }

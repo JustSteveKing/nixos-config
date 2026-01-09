@@ -29,7 +29,7 @@
       bind = [
         # Terminal and Apps
         "$mod, Return, exec, $terminal" # This replaces the kitty default
-        "$mod, Q, killactive,"          # Close focused window
+        "$mod, Q, killactive," # Close focused window
         "$mod, Space, exec, $menu"
         "$mod, F, exec, firefox"
         "$mod, E, exec, $fileManager"
@@ -37,7 +37,7 @@
         "$mod, V, togglefloating,"
         "$mod, O, exec, obs"
         "$mod, S, exec, studio-toggle"
-        "$mod, M, exit,"                # Logout of Hyprland
+        "$mod, M, exit," # Logout of Hyprland
         "$mod, L, exec, hyprlock"
 
 
@@ -71,7 +71,7 @@
         "waybar"
         "blueman-applet"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-	"walker --gapplication-service"
+        "walker --gapplication-service"
       ];
     };
   };

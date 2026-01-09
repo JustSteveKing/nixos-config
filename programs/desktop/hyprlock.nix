@@ -13,7 +13,7 @@
 
       background = [
         {
-          path = "screenshot"; 
+          path = "screenshot";
           blur_passes = 3;
           blur_size = 8;
         }
@@ -32,8 +32,8 @@
           # Stylix would have provided these, so we add them back manually
           # to keep the Catppuccin look
           outer_color = "rgb(180, 190, 254)"; # Lavender
-          inner_color = "rgb(30, 30, 46)";    # Base
-          font_color = "rgb(205, 214, 244)";  # Text
+          inner_color = "rgb(30, 30, 46)"; # Base
+          font_color = "rgb(205, 214, 244)"; # Text
         }
       ];
 

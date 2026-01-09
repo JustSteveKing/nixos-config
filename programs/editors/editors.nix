@@ -9,7 +9,7 @@
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
         catppuccin.catppuccin-vsc
-	github.copilot
+        github.copilot
 
         astro-build.astro-vscode
 
@@ -20,15 +20,15 @@
         "terminal.integrated.defaultProfile.linux" = "bash";
         # Tip: Add this to hide the "Profiles" badge if you only use one
         "workbench.settings.editor" = "json";
-	"php.validate.executablePath" = "${pkgs.php84}/bin/php";
-	"intelephense.phpVersion" = "8.4.0";
+        "php.validate.executablePath" = "${pkgs.php84}/bin/php";
+        "intelephense.phpVersion" = "8.4.0";
 
-	"files.associations" = {
+        "files.associations" = {
           "*.blade.php" = "html";
-	};
-	"emmet.includeLanguages" = {
+        };
+        "emmet.includeLanguages" = {
           "blade" = "html";
-	};
+        };
       };
     };
 

@@ -20,20 +20,20 @@
     fonts = {
       monospace = {
         package = pkgs.jetbrains-mono;
-	name = "JetBrains Mono";
+        name = "JetBrains Mono";
       };
       sansSerif = {
         package = pkgs.dejavu_fonts;
-	name = "DejaVu Sans";
+        name = "DejaVu Sans";
       };
       serif = {
         package = pkgs.dejavu_fonts;
-	name = "DevjsVu Serif";
+        name = "DevjsVu Serif";
       };
       sizes = {
         applications = 12;
-	terminal = 12;
-	desktop = 10;
+        terminal = 12;
+        desktop = 10;
       };
     };
 
