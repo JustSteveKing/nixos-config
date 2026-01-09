@@ -31,6 +31,14 @@
     };
   };
 
+  nix.settings = {
+    substituters = [ "https://cache.nixos.org" ];
+    trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+
+    sandbox = "relaxed";
+    extra-sandbox-paths = [ "/etc/resolv.conf" ];
+  };
+
   networking.hostName = "framework";
   networking.networkmanager.enable = true;
 
@@ -64,6 +72,11 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
     config.common.default = "*";
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
 

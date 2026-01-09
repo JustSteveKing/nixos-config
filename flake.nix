@@ -4,15 +4,23 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-colors.url = "github:misterio77/nix-colors";
+    walker.url = "github:abenz1267/walker";
+    stylix.url = "github:danth/stylix";
+
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-colors, stylix, home-manager, ... }@inputs: {
     nixosConfigurations.framework = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = {
+        inherit inputs;
+      };
       modules = [
         ./configuration.nix
 
@@ -21,9 +29,22 @@
 
 	home-manager.nixosModules.home-manager
 	{
-          home-manager.useGlobalPkgs = true;
-	  home-manager.useUserPackages = true;
-	  home-manager.users.steve = import ./home.nix;
+
+          home-manager = {
+	    backupFileExtension = "bak";
+
+	    extraSpecialArgs = { inherit inputs; };
+
+            useGlobalPkgs = false;
+	    useUserPackages = true;
+
+            users.steve = {
+	      nixpkgs.config.allowUnfree = true;
+	      imports = [ ./home.nix ];
+
+	    };
+	  };
+
 	}
       ];
     };

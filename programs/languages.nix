@@ -11,6 +11,7 @@
 
     nodejs_22
     typescript
+    pnpm
 
   ];
 }

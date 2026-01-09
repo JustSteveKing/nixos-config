@@ -4,7 +4,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = "HDMI-A-1, 2256x1504, 0x0, 1.60";
+      monitor = "HDMI-A-1, 2256x1504, 0x0, 1.33";
 
       input = {
         kb_layout = "gb"; # Matches your console setting [cite: 33]
@@ -16,14 +16,13 @@
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
         layout = "dwindle";
       };
 
       # Set your preferred programs
       "$terminal" = "ghostty";
       "$fileManager" = "nautilus";
-      "$menu" = "hyprlauncher";
+      "$menu" = "walker";
 
       "$mod" = "SUPER";
 
@@ -37,7 +36,10 @@
         "$mod, C, exec, code"
         "$mod, V, togglefloating,"
         "$mod, O, exec, obs"
+        "$mod, S, exec, studio-toggle"
         "$mod, M, exit,"                # Logout of Hyprland
+        "$mod, L, exec, hyprlock"
+
 
         # Vim-style Focus Movement (HJKL)
         "$mod, h, movefocus, l"
@@ -69,24 +71,15 @@
         "waybar"
         "blueman-applet"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+	"walker --gapplication-service"
       ];
     };
   };
 
   home.packages = with pkgs; [
     waybar
-    hyprpaper
-    mako
     wl-clipboard
     blueman
   ];
 
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      preload = [ "/home/steve/wallpapers/bg.png" ];
-      wallpaper = [ "HDMI-A-1,/home/steve/wallpapers/bg.png" ];
-    };
-  };
 }

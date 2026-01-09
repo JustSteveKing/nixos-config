@@ -1,12 +1,23 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
-  home.packages = [ pkgs.hyprlauncher ];
+  imports = [ inputs.walker.homeManagerModules.default ];
 
-  home.file.".config/hypr/hyprlauncher.conf".text = ''
-    hover_color = rgba(89b4faff)
-    text_color = rgba(cdd6f4ff)
-    main_color = rgba(1e1e2eff)
-    border_color = rgba(89b4faff)
-  '';
+  programs.walker = {
+    enable = true;
+
+    runAsService = true;
+
+    config = {
+
+      search.placeholder = "Search apps, files, or calculations ...";
+      ui.fullscreen = false;
+      list = {
+        height = 300;
+      };
+
+      websearch.prefix = "?";
+      switcher.prefix = "/";
+    };
+  };
 }

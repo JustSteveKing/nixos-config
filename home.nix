@@ -17,6 +17,12 @@
     ./programs/waybar.nix
     ./programs/zellij.nix
     ./programs/taskwarrior.nix
+    ./programs/scripts.nix
+    ./programs/theme.nix
+    ./programs/mako.nix
+    ./programs/hyprlock.nix
+    ./programs/studio-mode.nix
+
   ];
 
   home.sessionVariables = {
@@ -27,6 +33,7 @@
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
   };
+
 
   home.stateVersion = "24.05";
 }
