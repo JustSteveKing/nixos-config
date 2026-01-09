@@ -1,184 +1,108 @@
 # NixOS Configuration
 
-Personal NixOS configuration for Framework Desktop with Hyprland window manager.
+This repository contains the complete NixOS configuration for my Framework Desktop, built with Nix Flakes and managed by Home Manager. It is designed to be a reproducible, well-organized, and easily maintainable setup for a Hyprland-based desktop environment.
 
 ## Features
 
-- **Window Manager**: Hyprland (Wayland compositor) with vim-style navigation
-- **Terminal**: Ghostty with Catppuccin Mocha theme + Zellij multiplexer
-- **Login Manager**: greetd with tuigreet for clean TTY-based login
-- **Audio**: PipeWire with full ALSA and PulseAudio compatibility
-- **AI Tools**: Claude Code, Aider, and local Ollama models (deepseek-r1:1.5b, llama3.2)
-- **Hardware Support**: AMD GPU, ZSA Moonlander keyboard, Bluetooth with experimental features
+- **Declarative & Reproducible**: The entire system, from the kernel to application dotfiles, is defined as code.
+- **Window Manager**: Hyprland (Wayland compositor) with vim-style navigation.
+- **Terminal**: Ghostty with the Catppuccin Mocha theme and Zellij for terminal multiplexing.
+- **Login Manager**: `greetd` with `tuigreet` for a clean, TTY-based login experience.
+- **Modular Structure**: System and home configurations are cleanly separated and broken down into logical, easy-to-manage modules.
 
-## System Specifications
+---
 
-- **Device**: Framework Desktop
-- **CPU**: AMD (with nixos-hardware optimizations)
-- **GPU**: AMD (amdgpu driver)
-- **Display**: 2256x1504 @ 1.60 scaling
-- **Keyboard Layout**: GB (British)
-- **Kernel**: Latest Linux kernel
+## Structure Overview
 
-## Quick Start
-
-### Initial Installation
-
-1. Clone this repository:
-```bash
-git clone git@github.com:JustSteveKing/nixos-config.git ~/nixos-config
-cd ~/nixos-config
-```
-
-2. Review and update hardware-specific settings:
-   - `hardware-configuration.nix` - Generate with `nixos-generate-config`
-   - `programs/hyprland.nix` - Adjust monitor configuration
-   - `configuration.nix` - Update timezone, locale, username
-
-3. Apply the configuration:
-```bash
-sudo nixos-rebuild switch --flake .#framework
-```
-
-### Updating the System
-
-```bash
-# Update flake inputs (nixpkgs, home-manager, etc.)
-nix flake update
-
-# Apply updates
-sudo nixos-rebuild switch --flake .#framework
-```
-
-## Project Structure
+The configuration is split into three main parts, promoting a clean separation of concerns:
 
 ```
 .
-├── flake.nix                  # Flake configuration with inputs and outputs
-├── configuration.nix          # System-level NixOS configuration
-├── hardware-configuration.nix # Hardware-specific settings
-├── home.nix                   # Home-manager user configuration
-└── programs/                  # Modular program configurations
-    ├── agents.nix            # AI coding tools
-    ├── aliases.nix           # Shell aliases
-    ├── browsers.nix          # Web browsers
-    ├── common.nix            # Common utilities
-    ├── ghostty.nix           # Terminal emulator
-    ├── git.nix               # Git configuration
-    ├── hyprland.nix          # Window manager config
-    ├── launcher.nix          # Application launcher
-    ├── obs.nix               # OBS Studio
-    ├── taskwarrior.nix       # Task management
-    ├── waybar.nix            # Status bar
-    └── zellij.nix            # Terminal multiplexer
+├── flake.nix                  # Main entrypoint: defines flake inputs and outputs.
+├── configuration.nix          # Top-level system configuration.
+├── home.nix                   # Top-level user configuration for Home Manager.
+│
+├── system/                    # System-level modules (hardware, services, etc.).
+│   ├── boot.nix
+│   ├── hardware.nix
+│   └── ...
+│
+└── programs/                  # User-level program configurations.
+    ├── desktop/               # Desktop environment (Hyprland, Waybar, etc.).
+    ├── shell/                 # Shell tools (aliases, zellij, etc.).
+    ├── editors/               # Code editors.
+    └── dev/                   # Development tools and languages.
 ```
 
-## Hyprland Keybindings
+-   **`flake.nix`**: The heart of the configuration, defining all dependencies (`nixpkgs`, `home-manager`, etc.) and tying the system and home configurations together.
+-   **`system/`**: Contains all system-wide modules. Instead of a single monolithic file, `configuration.nix` simply imports the modules from this directory.
+-   **`programs/`**: Contains all user-specific program configurations, managed by Home Manager. It's further divided into categories like `desktop`, `shell`, and `editors` for clarity.
 
-| Key Combination | Action |
-|----------------|--------|
-| `SUPER + Return` | Open terminal (Ghostty) |
-| `SUPER + Q` | Close focused window |
-| `SUPER + Space` | Launch application menu |
-| `SUPER + F` | Open Firefox |
-| `SUPER + E` | Open file manager (Nautilus) |
-| `SUPER + O` | Open OBS Studio |
-| `SUPER + V` | Toggle floating mode |
-| `SUPER + M` | Exit Hyprland |
-| `SUPER + H/J/K/L` | Navigate windows (vim-style) |
-| `SUPER + 1/2/3/4` | Switch to workspace 1-4 |
-| `SUPER + SHIFT + 1/2/3/4` | Move window to workspace 1-4 |
+---
 
-## Adding New Programs
+## Makefile Workflow
 
-1. Create a new file in `programs/` directory:
-```nix
-# programs/example.nix
-{ pkgs, ... }:
+A `Makefile` is provided to simplify the most common management tasks. Use `make` or `make help` to see all available commands.
 
-{
-  programs.example = {
-    enable = true;
-    # configuration here
-  };
+### System Management
 
-  # Or for packages without home-manager module:
-  home.packages = with pkgs; [
-    example-package
-  ];
-}
-```
+-   **`make switch`**: The most common command. Builds the new configuration and immediately activates it.
+-   **`make test`**: Builds the configuration but does not activate it. This is useful for checking for errors before committing to a change.
+-   **`make boot`**: Builds the configuration and makes it the default option in the bootloader, but does not activate it until the next reboot.
 
-2. Import it in `home.nix`:
-```nix
-imports = [
-  # ... existing imports
-  ./programs/example.nix
-];
-```
+### Code Quality
 
-3. Rebuild:
-```bash
-sudo nixos-rebuild switch --flake .#framework
-```
+-   **`make fmt`**: Automatically formats all `.nix` files in the repository using `nixpkgs-fmt`.
+-   **`make lint`**: Runs a series of checks to find potential errors, style issues, and unused code in your configuration.
 
-## Maintenance
+### Maintenance & History
 
-### Cleanup Old Generations
+-   **`make update`**: Updates all flake inputs (e.g., `nixpkgs`) to their latest versions and updates the `flake.lock` file.
+-   **`make gc`**: Cleans up your system by removing old, unused Nix generations and optimizing the Nix store to save space.
+-   **`make history`**: Lists all previous system generations.
+-   **`make diff`**: Shows the changes between the current and previous system generations.
 
-```bash
-# List system generations
-sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
-
-# Delete generations older than 7 days
-sudo nix-collect-garbage --delete-older-than 7d
-
-# Optimize nix store
-nix-store --optimize
-```
-
-### Rollback
-
-If something breaks after an update:
-
-```bash
-# Boot into previous generation (select in bootloader)
-# Or rollback and switch:
-sudo nixos-rebuild switch --rollback
-```
-
-## AI Development Tools
-
-This configuration includes several AI assistants:
-
-- **Claude Code**: `claude` or `cc` - Interactive AI coding assistant
-- **Quick queries**: `ask` - One-off Claude queries (e.g., `ask "explain this error"`)
-- **Aider**: `aider-chat` - AI pair programming in terminal
-- **Ollama**: Local LLM service running deepseek-r1:1.5b and llama3.2
+---
 
 ## Customization
 
+### Adding a New Program
+
+1.  **Choose a Category**: Decide which subdirectory in `programs/` the new application belongs to (e.g., `desktop`, `shell`, `dev`).
+2.  **Create the File**: Create a new `.nix` file for your program in that directory (e.g., `programs/shell/my-new-tool.nix`).
+3.  **Add to `default.nix`**: Open the `default.nix` file within that same directory and add your new file to the `imports` list.
+    ```nix
+    # In programs/shell/default.nix
+    {
+      imports = [
+        ./aliases.nix
+        ./ghostty.nix
+        ./zellij.nix
+        ./my-new-tool.nix  # Add your new file here
+      ];
+    }
+    ```
+4.  **Rebuild**: Apply your configuration using `make switch`.
+
 ### Personal Information
 
-Update the following files with your details:
+-   **Git**: Update `programs/dev/git.nix` with your username and email.
+-   **System**: Update `system/users.nix` and `system/environment.nix` with your user details, timezone, and locale.
+-   **Theme**: Theming is managed in `programs/desktop/theme.nix`. Terminal colors are in `programs/shell/ghostty.nix`.
 
-- `programs/git.nix` - Git username and email
-- `configuration.nix` - User account, timezone, locale
-- `services.hyprpaper` wallpaper path in `programs/hyprland.nix`
+---
 
-### Theme and Appearance
+## Keybindings (Hyprland)
 
-- Terminal theme: `programs/ghostty.nix` (currently Catppuccin Mocha)
-- Window manager colors: `programs/hyprland.nix` (border colors)
-- Status bar: `programs/waybar.nix` and `programs/waybar-style.css`
+| Key Combination          | Action                         |
+| ------------------------ | ------------------------------ |
+| `SUPER + Return`         | Open terminal (Ghostty)        |
+| `SUPER + Q`              | Close focused window           |
+| `SUPER + Space`          | Launch application menu (Walker) |
+| `SUPER + L`              | Lock screen (Hyprlock)         |
+| `SUPER + E`              | Open file manager (Nautilus)   |
+| `SUPER + H/J/K/L`        | Navigate windows (vim-style)   |
+| `SUPER + 1-4`            | Switch to workspace 1-4        |
+| `SUPER + SHIFT + 1-4`    | Move window to workspace 1-4   |
 
-## Notes
-
-- This configuration uses flakes (requires `nix.settings.experimental-features = [ "nix-command" "flakes" ]`)
-- Hardware configuration is specific to Framework 13 with AMD CPU
-- Bluetooth has experimental features enabled for better connectivity
-- OBS virtual camera configured via v4l2loopback
-
-## License
-
-This is a personal configuration. Feel free to use as reference or template for your own setup.
+---
