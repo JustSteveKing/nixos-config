@@ -13,7 +13,6 @@
 
         astro-build.astro-vscode
 
-
       ];
 
       userSettings = {
@@ -21,6 +20,15 @@
         "terminal.integrated.defaultProfile.linux" = "bash";
         # Tip: Add this to hide the "Profiles" badge if you only use one
         "workbench.settings.editor" = "json";
+	"php.validate.executablePath" = "${pkgs.php84}/bin/php";
+	"intelephense.phpVersion" = "8.4.0";
+
+	"files.associations" = {
+          "*.blade.php" = "html";
+	};
+	"emmet.includeLanguages" = {
+          "blade" = "html";
+	};
       };
     };
 

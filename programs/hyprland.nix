@@ -7,7 +7,7 @@
       monitor = "HDMI-A-1, 2256x1504, 0x0, 1.33";
 
       input = {
-        kb_layout = "gb"; # Matches your console setting [cite: 33]
+        kb_layout = "us"; # Matches your console setting [cite: 33]
         follow_mouse = 1;
         touchpad.natural_scroll = true;
       };
