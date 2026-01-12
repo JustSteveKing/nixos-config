@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    nix-init
 
     go
     gopls

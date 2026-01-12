@@ -22,6 +22,10 @@
 
     # Generic file manager (Nautilus works fine even without GNOME)
     nautilus
+    audacity
+    qpwgraph
+    easyeffects
+    handbrake
 
     kdePackages.kdenlive
   ];

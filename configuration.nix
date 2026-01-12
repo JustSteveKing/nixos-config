@@ -16,10 +16,9 @@
   home-manager = {
     backupFileExtension = "bak";
     extraSpecialArgs = { inherit inputs; };
-    useGlobalPkgs = false;
+    useGlobalPkgs = true;
     useUserPackages = true;
     users.steve = {
-      nixpkgs.config.allowUnfree = true;
       imports = [ ./home.nix ];
     };
   };

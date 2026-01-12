@@ -30,5 +30,16 @@
         home-manager.nixosModules.home-manager
       ];
     };
+
+    templates = {
+      php = {
+        path = ./templates/php;
+	description = "PHP 8.4 / Laravel development environment";
+      };
+      go = {
+        path = ./templates/go;
+	description = "Go development environment";
+      };
+    };
   };
 }
