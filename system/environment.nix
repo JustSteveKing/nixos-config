@@ -15,6 +15,7 @@
     wget
     tuigreet
     keymapp # For your Moonlander
+    gemini-cli
   ];
 
   system.stateVersion = "24.11";
