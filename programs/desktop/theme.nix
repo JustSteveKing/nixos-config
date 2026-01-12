@@ -9,7 +9,7 @@
 
   stylix = {
     enable = true;
-    image = ../assets/bg.png;
+    image = ../../assets/bg.png;
 
     opacity = {
       desktop = 0.8;

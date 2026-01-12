@@ -17,7 +17,7 @@
         modules-right = [ "pulseaudio#microphone" "pulseaudio" "clock" "tray" ];
 
         "custom/nix" = {
-          format = "  "; # The NixOS Icon (requires Nerd Fonts)
+          format = " "; # The NixOS Icon (requires Nerd Fonts)
           tooltip = false;
           on-click = "walker"; # Open your new launcher when clicked
         };
