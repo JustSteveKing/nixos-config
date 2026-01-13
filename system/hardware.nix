@@ -1,7 +1,7 @@
 {
   powerManagement.cpuFreqGovernor = "performance";
 
-  hardware.cpu.amd.updateMicrocode = "true";
+  hardware.cpu.amd.updateMicrocode = true;
 
   hardware.bluetooth = {
     enable = true;
